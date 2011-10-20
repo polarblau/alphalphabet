@@ -35,7 +35,7 @@ if ENV['RACK_ENV'] != 'production'
   require 'rack/coffee'
   use Rack::Coffee, {
     :root => root,
-    :urls => '/javascripts/'
+    :urls => ['/javascripts/', '/spec/']
   }
 end
 
