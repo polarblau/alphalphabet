@@ -1,0 +1,19 @@
+!!! 5
+%html{:manifest => "alphalphabet.manifest"}
+  %head
+    %meta{:content => "user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0", :name => "viewport"}
+    %meta{:charset => "utf-8"}
+    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}
+    %meta{:content => "black", :name => "apple-mobile-web-app-status-bar-style"}
+    %link{:href => "iphone_alphalphabet_icon.png", :rel => "apple-touch-icon"}
+    %link{:href => "startup.png", :rel => "apple-touch-startup-image"}
+    %link{:href => "stylesheets/screen.css", :media => "screen, mobile", :rel => "stylesheet"}
+    %title AlphAlphabet
+  %body
+    
+    = yield
+    
+    %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"}
+    :javascript
+      window.jQuery || document.write('<script src="js/libs/jquery-1.6.4.min.js"><\/script>')
+    %script{:src => "javascripts/application.js"}
