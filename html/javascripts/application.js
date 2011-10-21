@@ -39,6 +39,7 @@
         }).attr("onclick", "").appendTo($quiz).bind("click", function() {
           var remove;
           letter = $(this).addClass("bounceOutDown").text();
+          console.log(letter);
           alphabetSounds[letter].play();
           remove = __bind(function() {
             return $(this).remove();

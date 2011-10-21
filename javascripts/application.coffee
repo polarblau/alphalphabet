@@ -56,6 +56,7 @@ $ ->
       .appendTo($quiz)
       .bind "click", ->
         letter = $(@).addClass("bounceOutDown").text()
+        console.log letter
         alphabetSounds[letter].play()
         remove = => $(@).remove()
         setTimeout(remove, 1000)
