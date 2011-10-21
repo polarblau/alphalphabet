@@ -15,11 +15,13 @@
       var $letter, bounce;
       $letter = $("<span/>", {
         "class": "suggestion animated",
-        text: letter,
-        css: {
-          fontSize: letterSize + "px",
-          left: 140 + i * letterSize,
-          top: 760 - letterSize * 2
+        "text": letter,
+        "css": {
+          "fontSize": letterSize + "px",
+          "left": 140 + i * letterSize,
+          "top": 760 - letterSize * 2,
+          "-webkit-transform": "rotate(" + (Math.random() * 20 - 10) + "deg)",
+          "-webkit-transition-duration": "" + (Math.random() * 2000 + 1000) + "ms"
         }
       }).appendTo($quiz);
       bounce = function() {
