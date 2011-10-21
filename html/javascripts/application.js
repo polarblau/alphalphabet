@@ -28,7 +28,7 @@
       return $(document).trigger("refreshquiz");
     };
     remove = __bind(function() {
-      $(this).removeClass("bounceInDown").addClass("bounceOutDown");
+      $(this).addClass("bounceOutDown");
       if (!$("#quiz").find(".bounceInDown").length) {
         return setTimeout(refresh, 1000);
       }
@@ -67,8 +67,7 @@
             "fontSize": "" + (width * 0.8) + "px",
             "left": margin + i * width,
             "top": 500 - width,
-            "width": "" + width + "px",
-            "-webkit-transform": "rotate(" + rotation + "deg)"
+            "width": "" + width + "px"
           }
         }).appendTo($quiz);
         bounce = function() {
