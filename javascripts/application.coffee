@@ -12,20 +12,19 @@ alphabetSounds = {}
 
 
 $ ->  
-
-  alert("foo")
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")
   
-  soundsLoadedCounter = 0
-  soundLoaded = ->
-    if ++soundsLoadedCounter == _.size(alphabetSounds)
-      alert "all sounds loaded"
+  # soundsLoadedCounter = 0
+  # soundLoaded = ->
+  #   if ++soundsLoadedCounter == _.size(alphabetSounds)
+  #     alert "all sounds loaded"
   
   _.each alphabet, (letter) ->
     alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
-    alphabetSounds[letter].load().bind "canplaythrough", soundLoaded
+    alphabetSounds[letter].load().bind "stall", ->
+      alert("stalling #{letter}")
                   
   quizOptions   = 
     pool: alphabet
@@ -53,8 +52,9 @@ $ ->
           "top"     : 500 - width
           "width"   : "#{width}px"
       })
+      .attr("onclick", "")
       .appendTo($quiz)
-      .bind "mousedown", ->
+      .bind "click", ->
         letter = $(@).addClass("bounceOutDown").text()
         alphabetSounds[letter].play()
         remove = => $(@).remove()

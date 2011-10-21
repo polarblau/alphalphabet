@@ -4,19 +4,14 @@
   alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
   alphabetSounds = {};
   $(function() {
-    var $quiz, $settings, quiz, quizOptions, soundLoaded, soundsLoadedCounter;
-    alert("foo");
+    var $quiz, $settings, quiz, quizOptions;
     $quiz = $("#quiz");
     $settings = $("#settings");
-    soundsLoadedCounter = 0;
-    soundLoaded = function() {
-      if (++soundsLoadedCounter === _.size(alphabetSounds)) {
-        return alert("all sounds loaded");
-      }
-    };
     _.each(alphabet, function(letter) {
       alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
-      return alphabetSounds[letter].load().bind("canplaythrough", soundLoaded);
+      return alphabetSounds[letter].load().bind("stall", function() {
+        return alert("stalling " + letter);
+      });
     });
     quizOptions = {
       pool: alphabet,
@@ -41,7 +36,7 @@
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).appendTo($quiz).bind("mousedown", function() {
+        }).attr("onclick", "").appendTo($quiz).bind("click", function() {
           var remove;
           letter = $(this).addClass("bounceOutDown").text();
           alphabetSounds[letter].play();
