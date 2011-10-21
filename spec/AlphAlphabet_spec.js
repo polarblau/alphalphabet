@@ -1,4 +1,0 @@
-describe('AlphAphabet', function() {
-
-
-});
