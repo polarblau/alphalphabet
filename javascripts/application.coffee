@@ -11,20 +11,19 @@ $ ->
                 
   possibilities = quiz.ask()
   
-  letterSize    = 800 / possibilities.length
-  letterWidth   = letterSize
+  letterSize    = 700 / possibilities.length
   
   _.each possibilities, (letter, i) ->
+    rotation = Math.random() * 50 - 25
     $letter = $("<span/>", { 
       "class": "suggestion animated"
       "text" : letter
       "css"  :
         "fontSize": letterSize + "px"
-        "left"    : 140 + i * letterSize
-        "top"     : 760 - letterSize * 2
-        "-webkit-transform" : "rotate(#{Math.random() * 20 - 10}deg)"
-        "-webkit-transition-duration" : "#{Math.random() * 2000 + 1000}ms"
+        "left"    : 180 + i * letterSize
+        "top"     : 500 - letterSize
+        # "-webkit-transform" : "rotate(#{rotation}deg)
     }).appendTo($quiz)
     bounce = -> 
-      $letter.addClass("bounceInDown")
+      $letter.addClass("bounceInDown").css("-webkit-transform", "rotate(#{rotation}deg)")
     setTimeout(bounce, Math.random() * 500 + 150 * i)
