@@ -3,7 +3,7 @@ addAudio = (id, file) ->
     .attr
       "id"      : "suggestion-#{id}"
       "autoplay": false
-      "preload" : false
+      "preload" : true
   removeListener = -> $track.unbind('canplaythrough')
   $track.bind('canplaythrough', removeListener)
   $("body").append($track)
@@ -11,6 +11,18 @@ addAudio = (id, file) ->
   $track.trigger("play")
   pauseTrack = => $track.trigger("pause")
   setTimeout(pauseTrack, 1)
+  
+letterClickHandler = ->
+  letter = $(@).data("value")
+  $("#suggestion-#{letter}").trigger("play")
+  refresh = -> $(document).trigger("refreshquiz")
+  remove = =>
+    $(@)
+      .removeClass("bounceInDown")
+      .addClass("bounceOutDown")
+    unless $("#quiz").find(".bounceInDown").length
+      setTimeout(refresh, 1000)
+  setTimeout(remove, 1000)
   
 
 POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
@@ -28,7 +40,6 @@ $ ->
     possibilitiesCount: 3
                 
   quiz          = new Quiz(quizOptions)
-  
   
   $(document).bind "refreshquiz", =>
     
@@ -51,25 +62,13 @@ $ ->
           "left"    : margin + i * width
           "top"     : 500 - width
           "width"   : "#{width}px"
-          # "-webkit-transform" : "rotate(#{rotation}deg)
-      }).appendTo($quiz)
+          "-webkit-transform" : "rotate(#{rotation}deg)"
+      })
+      .appendTo($quiz)
       bounce = -> 
-        $letter
-          .addClass("bounceInDown")
-          .css("-webkit-transform", "rotate(#{rotation}deg)")
+        $letter.addClass("bounceInDown")
       setTimeout(bounce, Math.random() * 500 + 150 * i)
-  
-  $("span.suggestion").live "click", ->
-    letter = $(@).data("value")
-    $("#suggestion-#{letter}").trigger("play")
-    refresh = -> $(document).trigger("refreshquiz")
-    remove = =>
-      $(@)
-        .removeClass("bounceInDown")
-        .addClass("bounceOutDown")
-      unless $quiz.find(".bounceInDown").length
-        setTimeout(refresh, 1000)
-    setTimeout(remove, 1000)
+      $letter.bind("click", letterClickHandler)
   #
   
   $(document).trigger("refreshquiz")

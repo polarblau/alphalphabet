@@ -1,12 +1,12 @@
 (function() {
-  var POOL, addAudio;
+  var POOL, addAudio, letterClickHandler;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   addAudio = function(id, file) {
     var $track, pauseTrack, removeListener;
     $track = $("<audio/>").attr({
       "id": "suggestion-" + id,
       "autoplay": false,
-      "preload": false
+      "preload": true
     });
     removeListener = function() {
       return $track.unbind('canplaythrough');
@@ -19,6 +19,21 @@
       return $track.trigger("pause");
     }, this);
     return setTimeout(pauseTrack, 1);
+  };
+  letterClickHandler = function() {
+    var letter, refresh, remove;
+    letter = $(this).data("value");
+    $("#suggestion-" + letter).trigger("play");
+    refresh = function() {
+      return $(document).trigger("refreshquiz");
+    };
+    remove = __bind(function() {
+      $(this).removeClass("bounceInDown").addClass("bounceOutDown");
+      if (!$("#quiz").find(".bounceInDown").length) {
+        return setTimeout(refresh, 1000);
+      }
+    }, this);
+    return setTimeout(remove, 1000);
   };
   POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
   $(function() {
@@ -52,30 +67,17 @@
             "fontSize": "" + (width * 0.8) + "px",
             "left": margin + i * width,
             "top": 500 - width,
-            "width": "" + width + "px"
+            "width": "" + width + "px",
+            "-webkit-transform": "rotate(" + rotation + "deg)"
           }
         }).appendTo($quiz);
         bounce = function() {
-          return $letter.addClass("bounceInDown").css("-webkit-transform", "rotate(" + rotation + "deg)");
+          return $letter.addClass("bounceInDown");
         };
-        return setTimeout(bounce, Math.random() * 500 + 150 * i);
+        setTimeout(bounce, Math.random() * 500 + 150 * i);
+        return $letter.bind("click", letterClickHandler);
       });
     }, this));
-    $("span.suggestion").live("click", function() {
-      var letter, refresh, remove;
-      letter = $(this).data("value");
-      $("#suggestion-" + letter).trigger("play");
-      refresh = function() {
-        return $(document).trigger("refreshquiz");
-      };
-      remove = __bind(function() {
-        $(this).removeClass("bounceInDown").addClass("bounceOutDown");
-        if (!$quiz.find(".bounceInDown").length) {
-          return setTimeout(refresh, 1000);
-        }
-      }, this);
-      return setTimeout(remove, 1000);
-    });
     return $(document).trigger("refreshquiz");
   });
 }).call(this);
