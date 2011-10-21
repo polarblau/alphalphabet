@@ -1,29 +1,76 @@
+addAudio = (id, file) ->
+  $track          = $("<audio/>")
+    .attr
+      "id"      : "suggestion-#{id}"
+      "autoplay": false
+      "preload" : false
+  removeListener = -> $track.unbind('canplaythrough')
+  $track.bind('canplaythrough', removeListener)
+  $("body").append($track)
+  $track.attr("src", file)
+  $track.trigger("play")
+  pauseTrack = => $track.trigger("pause")
+  setTimeout(pauseTrack, 1)
+  
+
+POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
+
 $ ->  
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")
+  
+  _.each POOL, (letter) ->
+    addAudio(letter, "audio/#{letter}.aiff")
                 
   quizOptions   = 
-    pool: "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
+    pool: POOL
     possibilitiesCount: 3
                 
   quiz          = new Quiz(quizOptions)
-                
-  possibilities = quiz.ask()
   
-  letterSize    = 700 / possibilities.length
   
-  _.each possibilities, (letter, i) ->
-    rotation = Math.random() * 50 - 25
-    $letter = $("<span/>", { 
-      "class": "suggestion animated"
-      "text" : letter
-      "css"  :
-        "fontSize": letterSize + "px"
-        "left"    : 180 + i * letterSize
-        "top"     : 500 - letterSize
-        # "-webkit-transform" : "rotate(#{rotation}deg)
-    }).appendTo($quiz)
-    bounce = -> 
-      $letter.addClass("bounceInDown").css("-webkit-transform", "rotate(#{rotation}deg)")
-    setTimeout(bounce, Math.random() * 500 + 150 * i)
+  $(document).bind "refreshquiz", =>
+    
+    $quiz.empty()
+         
+    possibilities = quiz.ask()
+  
+    margin        = 50
+    width         = (1024 - margin * 2)  / possibilities.length
+
+    _.each possibilities, (letter, i) ->
+      rotation = Math.random() * 30 - 15
+      $letter = $("<span/>", { 
+        "class": "suggestion animated"
+        "text" : letter
+        "data" : 
+          "value": letter.toUpperCase()
+        "css"  :
+          "fontSize": "#{width * 0.8}px"
+          "left"    : margin + i * width
+          "top"     : 500 - width
+          "width"   : "#{width}px"
+          # "-webkit-transform" : "rotate(#{rotation}deg)
+      }).appendTo($quiz)
+      bounce = -> 
+        $letter
+          .addClass("bounceInDown")
+          .css("-webkit-transform", "rotate(#{rotation}deg)")
+      setTimeout(bounce, Math.random() * 500 + 150 * i)
+  
+  $("span.suggestion").live "click", ->
+    letter = $(@).data("value")
+    $("#suggestion-#{letter}").trigger("play")
+    refresh = -> $(document).trigger("refreshquiz")
+    remove = =>
+      $(@)
+        .removeClass("bounceInDown")
+        .addClass("bounceOutDown")
+      unless $quiz.find(".bounceInDown").length
+        setTimeout(refresh, 1000)
+    setTimeout(remove, 1000)
+  #
+  
+  $(document).trigger("refreshquiz")
+    
