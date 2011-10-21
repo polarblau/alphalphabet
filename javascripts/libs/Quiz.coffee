@@ -11,7 +11,7 @@ class Quiz
   
   ask: ->
     start = Math.floor(Math.random() * (@pool.length - @possibilitiesCount))
-    @possibilities = @pool.slice(start, start + @possibilitiesCount)
+    @possibilities = @pool.sort(@_byRandom).slice(start, start + @possibilitiesCount)
     @pick()
     @possibilities
     
@@ -20,6 +20,12 @@ class Quiz
     
   check: (suggestion) ->
     @correct == suggestion
+    
+  #
+  
+  # cheap shuffle
+  _byRandom: ->
+    Math.round(Math.random()) - 0.5
     
     
 window.Quiz = Quiz

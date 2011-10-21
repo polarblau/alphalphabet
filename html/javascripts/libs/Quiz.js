@@ -17,7 +17,7 @@
     Quiz.prototype.ask = function() {
       var start;
       start = Math.floor(Math.random() * (this.pool.length - this.possibilitiesCount));
-      this.possibilities = this.pool.slice(start, start + this.possibilitiesCount);
+      this.possibilities = this.pool.sort(this._byRandom).slice(start, start + this.possibilitiesCount);
       this.pick();
       return this.possibilities;
     };
@@ -26,6 +26,9 @@
     };
     Quiz.prototype.check = function(suggestion) {
       return this.correct === suggestion;
+    };
+    Quiz.prototype._byRandom = function() {
+      return Math.round(Math.random()) - 0.5;
     };
     return Quiz;
   })();
