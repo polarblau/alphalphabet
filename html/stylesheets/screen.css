@@ -301,3 +301,5 @@ td {
 
   h2, h3 {
     page-break-after: avoid; } }
+body {
+  background: transparent url(../images/apple-touch-startup-image.jpg) no-repeat; }
