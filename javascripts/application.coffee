@@ -12,6 +12,8 @@ alphabetSounds = {}
 
 
 $ ->  
+
+  alert("foo")
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")

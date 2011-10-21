@@ -5,6 +5,7 @@
   alphabetSounds = {};
   $(function() {
     var $quiz, $settings, quiz, quizOptions, soundLoaded, soundsLoadedCounter;
+    alert("foo");
     $quiz = $("#quiz");
     $settings = $("#settings");
     soundsLoadedCounter = 0;
