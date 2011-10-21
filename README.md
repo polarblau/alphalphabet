@@ -1,28 +1,7 @@
-What is this?
-=============
-
-This is a simple HTML prototype written in HAML or ERB that is designed to be
-viewed with Serve.
-
-What is Serve? Serve is an open-source rapid prototyping framework for Web
-applications. It makes it easy to prototype functionality without writing a
-single line of backend code.
-
-
 How do I install and run Serve?
 -------------------------------
 
-Serve is distributed as a Ruby gem to make it easy to get up and running. You
-must have Ruby installed in order to download and use Serve. The Ruby download
-page provides instructions for getting Ruby setup on different platforms:
-
-<http://www.ruby-lang.org/en/downloads/>
-
-After you have Ruby installed, open up the command prompt and type:
-
     gem install serve
-
-(OSX and Unix users may need to prefix the command with `sudo`.)
 
 After Serve is installed, you can start it up in a given directory like this:
 
@@ -34,22 +13,34 @@ Web browser at this URL:
 <http://localhost:4000>
 
 
-Compass and Sass
-----------------
+SASS & HAML
+-----------
 
-This prototype uses Compass and Sass to generate CSS. Both are distributed as
-Ruby gems and can be easily installed from the command prompt. Since the
-Compass gem depends on Sass, you can install them both with one command:
+The style sheets for this project are written in SASS, the templates in HAML.
 
-    gem install compass
+Learn more about Sass: <http://sass-lang.org>
+Learn more about Sass: <http://haml-lang.com/>
 
-Learn more about Sass:
 
-<http://sass-lang.org>
+Coffeescript
+------------
 
-Learn more about Compass:
+The javascript for this project are written in Coffescript and compiled to javascript
+on demand by the coffee-rack gem
 
-<http://compass-style.org>
+Learn more about Coffescript: <http://jashkenas.github.com/coffee-script/>
+
+
+JS Specs
+--------
+
+The specs are written using Jasmine. To run them open `spec/index.html`
+in a browser. The specs themselves are written using Coffeescript, but since the 
+specs aren't run off the server, you need to add a watcher:
+
+    $ coffee -c -o spec/ --watch spec/ 
+
+Learn more about Jasmine: <https://github.com/pivotal/jasmine/>
 
 
 Rack and Passenger
@@ -65,11 +56,6 @@ information about using Serve and Passenger see:
 
 Exporting
 ---------
-
-To export this project to pure HTML and CSS you will need the prerelease
-version of Serve. To get started with the prerelease version:
-
-    gem install --pre serve
 
 To export your project, use the new "export" command:
 
