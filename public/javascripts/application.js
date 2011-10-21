@@ -4,14 +4,19 @@
   alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
   alphabetSounds = {};
   $(function() {
-    var $quiz, $settings, quiz, quizOptions;
+    var $quiz, $settings, group, quiz, quizOptions;
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
       alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
-      return alphabetSounds[letter].load().play().bind("stall", function() {
+      return alphabetSounds[letter].load().bind("stall", function() {
         return alert("stalling " + letter);
       });
+    });
+    group = new buzz.group(_.values(alphabetSounds));
+    $quiz.bind("click", function() {
+      group.play();
+      return $quiz.unbind("click");
     });
     quizOptions = {
       pool: alphabet,

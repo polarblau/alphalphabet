@@ -385,12 +385,15 @@ body {
 body {
   background: transparent url(../images/apple-touch-startup-image.jpg) no-repeat; }
 
-#quiz span.suggestion {
-  position: absolute;
-  display: block;
-  visibility: hidden;
-  color: white;
-  font-size: 15em;
-  text-align: center;
-  font-family: "Gibson-Bold";
-  -webkit-text-shadow: 0 0 15px black; }
+#quiz {
+  height: 768px;
+  width: 1024px; }
+  #quiz span.suggestion {
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    color: white;
+    font-size: 15em;
+    text-align: center;
+    font-family: "Gibson-Bold";
+    -webkit-text-shadow: 0 0 15px black; }

@@ -23,9 +23,14 @@ $ ->
   
   _.each alphabet, (letter) ->
     alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
-    alphabetSounds[letter].load().play().bind "stall", ->
+    alphabetSounds[letter].load().bind "stall", ->
       alert("stalling #{letter}")
-                  
+    
+  group = new buzz.group(_.values(alphabetSounds))
+  $quiz.bind "click", ->
+    group.play()
+    $quiz.unbind("click")
+                
   quizOptions   = 
     pool: alphabet
     possibilitiesCount: 3
