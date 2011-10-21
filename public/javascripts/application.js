@@ -21,17 +21,15 @@
     return setTimeout(pauseTrack, 1);
   };
   letterClickHandler = function(e) {
-    var letter, refresh, remove;
-    letter = $(e.currentTarget).text();
+    var letter, remove;
+    letter = $(this).data("value");
     $("#suggestion-" + letter).trigger("play");
-    refresh = function() {
-      return $(document).trigger("refreshquiz");
-    };
+    $(this).addClass("bounceOutDown");
     remove = __bind(function() {
-      $(this).addClass("bounceOutDown").removeClass("bounceInDown");
-      if (!$("#quiz").find(".bounceInDown").length) {
-        return setTimeout(refresh, 500);
+      if ($("#quiz").find(".suggestion").length === 1) {
+        $(document).trigger("refreshquiz");
       }
+      return $(this).remove();
     }, this);
     return setTimeout(remove, 1000);
   };
