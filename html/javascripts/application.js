@@ -20,9 +20,9 @@
     }, this);
     return setTimeout(pauseTrack, 1);
   };
-  letterClickHandler = function() {
+  letterClickHandler = function(e) {
     var letter, refresh, remove;
-    letter = $(this).data("value");
+    letter = $(e.currentTarget).text();
     $("#suggestion-" + letter).trigger("play");
     refresh = function() {
       return $(document).trigger("refreshquiz");
@@ -30,7 +30,7 @@
     remove = __bind(function() {
       $(this).addClass("bounceOutDown").removeClass("bounceInDown");
       if (!$("#quiz").find(".bounceInDown").length) {
-        return setTimeout(refresh, 1000);
+        return setTimeout(refresh, 500);
       }
     }, this);
     return setTimeout(remove, 1000);

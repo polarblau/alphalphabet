@@ -12,14 +12,14 @@ addAudio = (id, file) ->
   pauseTrack = => $track.trigger("pause")
   setTimeout(pauseTrack, 1)
   
-letterClickHandler = ->
-  letter = $(@).data("value")
+letterClickHandler = (e)->
+  letter = $(e.currentTarget).text()
   $("#suggestion-#{letter}").trigger("play")
   refresh = -> $(document).trigger("refreshquiz")
   remove = =>
     $(@).addClass("bounceOutDown").removeClass("bounceInDown")
     unless $("#quiz").find(".bounceInDown").length
-      setTimeout(refresh, 1000)
+      setTimeout(refresh, 500)
   setTimeout(remove, 1000)
   
 
