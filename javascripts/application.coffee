@@ -1,20 +1,29 @@
 addAudio = (id, file) ->
-  $track          = $("<audio/>")
-    .attr
-      "id"      : "suggestion-#{id}"
-      "autoplay": false
-      "preload" : true
-  removeListener = -> $track.unbind('canplaythrough')
-  $track.bind('canplaythrough', removeListener)
-  $("body").append($track)
-  $track.attr("src", file)
-  $track.trigger("play")
-  pauseTrack = => $track.trigger("pause")
-  setTimeout(pauseTrack, 1)
+  track = document.createElement("audio")
+  track.id = "suggestion-#{id}"
+  track.src = file
+  track.controls = ""
+  document.body.appendChild(track)
+  track.load()
+  # track.play()
+  
+  # $track          = $("<audio/>")
+  #   .attr
+  #     "id"      : "suggestion-#{id}"
+  #     "autoplay": false
+  #     "preload" : false
+  # $track.trigger("pause")
+  # removeListener = -> $track.unbind('canplaythrough')
+  # $track.bind('canplaythrough', removeListener)
+  # $("body").append($track)
+  # $track.attr("src", file)
+  # $track.trigger("play")
+  # pauseTrack = => $track.trigger("pause")
+  # setTimeout(pauseTrack, 1)
   
 letterClickHandler = (e)->
   letter = $(@).data("value")
-  $("#suggestion-#{letter}").trigger("play")
+  $("#suggestion-#{letter}")[0].play()
   $(@).addClass("bounceOutDown")
   remove = =>
     if $("#quiz").find(".suggestion").length == 1

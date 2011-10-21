@@ -2,28 +2,18 @@
   var POOL, addAudio, letterClickHandler;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   addAudio = function(id, file) {
-    var $track, pauseTrack, removeListener;
-    $track = $("<audio/>").attr({
-      "id": "suggestion-" + id,
-      "autoplay": false,
-      "preload": true
-    });
-    removeListener = function() {
-      return $track.unbind('canplaythrough');
-    };
-    $track.bind('canplaythrough', removeListener);
-    $("body").append($track);
-    $track.attr("src", file);
-    $track.trigger("play");
-    pauseTrack = __bind(function() {
-      return $track.trigger("pause");
-    }, this);
-    return setTimeout(pauseTrack, 1);
+    var track;
+    track = document.createElement("audio");
+    track.id = "suggestion-" + id;
+    track.src = file;
+    track.controls = "";
+    document.body.appendChild(track);
+    return track.load();
   };
   letterClickHandler = function(e) {
     var letter, remove;
     letter = $(this).data("value");
-    $("#suggestion-" + letter).trigger("play");
+    $("#suggestion-" + letter)[0].play();
     $(this).addClass("bounceOutDown");
     remove = __bind(function() {
       if ($("#quiz").find(".suggestion").length === 1) {
