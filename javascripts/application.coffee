@@ -17,7 +17,7 @@ letterClickHandler = ->
   $("#suggestion-#{letter}").trigger("play")
   refresh = -> $(document).trigger("refreshquiz")
   remove = =>
-    $(@).addClass("bounceOutDown")
+    $(@).addClass("bounceOutDown").removeClass("bounceInDown")
     unless $("#quiz").find(".bounceInDown").length
       setTimeout(refresh, 1000)
   setTimeout(remove, 1000)
@@ -60,7 +60,6 @@ $ ->
           "left"    : margin + i * width
           "top"     : 500 - width
           "width"   : "#{width}px"
-          #{}"-webkit-transform" : "rotate(#{rotation}deg)"
       })
       .appendTo($quiz)
       bounce = -> 

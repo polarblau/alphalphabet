@@ -28,7 +28,7 @@
       return $(document).trigger("refreshquiz");
     };
     remove = __bind(function() {
-      $(this).addClass("bounceOutDown");
+      $(this).addClass("bounceOutDown").removeClass("bounceInDown");
       if (!$("#quiz").find(".bounceInDown").length) {
         return setTimeout(refresh, 1000);
       }

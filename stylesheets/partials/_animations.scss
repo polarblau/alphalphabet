@@ -42,6 +42,7 @@ body { -webkit-transform: translateZ(0); }
 	100% {
 		opacity: 0;
 		-webkit-transform: translateY(2000px);
+		visibility: hidden !important;
 	}
 }
 
