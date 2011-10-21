@@ -1,40 +1,24 @@
 (function() {
-  var POOL, addAudio, letterClickHandler, players;
+  var alphabet, alphabetSounds;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  addAudio = function(id, file) {
-    var track;
-    track = document.createElement("audio");
-    track.id = "suggestion-" + id;
-    track.src = file;
-    track.controls = "";
-    document.body.appendChild(track);
-    track.load();
-    return track;
-  };
-  letterClickHandler = function(e) {
-    var letter, remove;
-    letter = $(this).data("value");
-    players[letter].play();
-    $(this).addClass("bounceOutDown");
-    remove = __bind(function() {
-      if ($("#quiz").find(".suggestion").length === 1) {
-        $(document).trigger("refreshquiz");
-      }
-      return $(this).remove();
-    }, this);
-    return setTimeout(remove, 1000);
-  };
-  POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
-  players = {};
+  alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
+  alphabetSounds = {};
   $(function() {
-    var $quiz, $settings, quiz, quizOptions;
+    var $quiz, $settings, quiz, quizOptions, soundLoaded, soundsLoadedCounter;
     $quiz = $("#quiz");
     $settings = $("#settings");
-    _.each(POOL, function(letter) {
-      return players[letter] = addAudio(letter, "audio/" + letter + ".aiff");
+    soundsLoadedCounter = 0;
+    soundLoaded = function() {
+      if (++soundsLoadedCounter === _.size(alphabetSounds)) {
+        return alert("all sounds loaded");
+      }
+    };
+    _.each(alphabet, function(letter) {
+      alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
+      return alphabetSounds[letter].load().bind("canplaythrough", soundLoaded);
     });
     quizOptions = {
-      pool: POOL,
+      pool: alphabet,
       possibilitiesCount: 3
     };
     quiz = new Quiz(quizOptions);
@@ -45,26 +29,31 @@
       margin = 50;
       width = (1024 - margin * 2) / possibilities.length;
       return _.each(possibilities, function(letter, i) {
-        var $letter, bounce, rotation;
+        var $letter, revealDelayed, rotation;
         rotation = Math.random() * 30 - 15;
         $letter = $("<span/>", {
           "class": "suggestion animated",
           "text": letter,
-          "data": {
-            "value": letter.toUpperCase()
-          },
           "css": {
             "fontSize": "" + (width * 0.8) + "px",
             "left": margin + i * width,
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).appendTo($quiz);
-        bounce = function() {
+        }).appendTo($quiz).bind("mousedown", function() {
+          var remove;
+          letter = $(this).addClass("bounceOutDown").text();
+          alphabetSounds[letter].play();
+          remove = __bind(function() {
+            return $(this).remove();
+          }, this);
+          return setTimeout(remove, 1000);
+        });
+        revealDelayed = function() {
+          rotation = Math.random() * 40 - 20;
           return $letter.addClass("bounceInDown");
         };
-        setTimeout(bounce, Math.random() * 500 + 150 * i);
-        return $letter.bind("click", letterClickHandler);
+        return setTimeout(revealDelayed, Math.random() * 500 + 150 * i);
       });
     }, this));
     return $(document).trigger("refreshquiz");

@@ -1,7 +1,7 @@
 body { -webkit-transform: translateZ(0); }
 
 .animated {
-  -webkit-animation: 1s ease;
+  -webkit-animation: all 1s ease;
 }
 
 @-webkit-keyframes bounceInDown {

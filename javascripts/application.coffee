@@ -1,36 +1,32 @@
-addAudio = (id, file) ->
-  track = document.createElement("audio")
-  track.id = "suggestion-#{id}"
-  track.src = file
-  track.controls = ""
-  document.body.appendChild(track)
-  track.load()
-  track
+# addAudio = (id, file) ->
+#   track = document.createElement("audio")
+#   track.id = "suggestion-#{id}"
+#   track.src = file
+#   track.controls = ""
+#   document.body.appendChild(track)
+#   track.load()
+#   track
 
-letterClickHandler = (e)->
-  letter = $(@).data("value")
-  players[letter].play()#$("#suggestion-#{letter}")[0].play()
-  $(@).addClass("bounceOutDown")
-  remove = =>
-    if $("#quiz").find(".suggestion").length == 1
-      $(document).trigger("refreshquiz")
-    $(@).remove()
-  setTimeout(remove, 1000)
-  
+alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
+alphabetSounds = {}
 
-POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
-players = {}
 
 $ ->  
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")
   
-  _.each POOL, (letter) ->
-    players[letter] = addAudio(letter, "audio/#{letter}.aiff")
-                
+  soundsLoadedCounter = 0
+  soundLoaded = ->
+    if ++soundsLoadedCounter == _.size(alphabetSounds)
+      alert "all sounds loaded"
+  
+  _.each alphabet, (letter) ->
+    alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
+    alphabetSounds[letter].load().bind "canplaythrough", soundLoaded
+                  
   quizOptions   = 
-    pool: POOL
+    pool: alphabet
     possibilitiesCount: 3
                 
   quiz          = new Quiz(quizOptions)
@@ -49,8 +45,6 @@ $ ->
       $letter = $("<span/>", { 
         "class": "suggestion animated"
         "text" : letter
-        "data" : 
-          "value": letter.toUpperCase()
         "css"  :
           "fontSize": "#{width * 0.8}px"
           "left"    : margin + i * width
@@ -58,11 +52,21 @@ $ ->
           "width"   : "#{width}px"
       })
       .appendTo($quiz)
-      bounce = -> 
+      .bind "mousedown", ->
+        letter = $(@).addClass("bounceOutDown").text()
+        alphabetSounds[letter].play()
+        remove = => $(@).remove()
+        setTimeout(remove, 1000)
+        
+      revealDelayed = -> 
+        rotation = Math.random() * 40 - 20
         $letter.addClass("bounceInDown")
-      setTimeout(bounce, Math.random() * 500 + 150 * i)
-      $letter.bind("click", letterClickHandler)
+          
+      setTimeout(revealDelayed, Math.random() * 500 + 150 * i)
   #
+    # 
+    # if $("#quiz").find(".suggestion").length == 1
+    #   $(document).trigger("refreshquiz")
   
   $(document).trigger("refreshquiz")
     
