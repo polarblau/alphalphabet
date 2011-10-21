@@ -1,5 +1,5 @@
 (function() {
-  var POOL, addAudio, letterClickHandler;
+  var POOL, addAudio, letterClickHandler, players;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   addAudio = function(id, file) {
     var track;
@@ -8,12 +8,13 @@
     track.src = file;
     track.controls = "";
     document.body.appendChild(track);
-    return track.load();
+    track.load();
+    return track;
   };
   letterClickHandler = function(e) {
     var letter, remove;
     letter = $(this).data("value");
-    $("#suggestion-" + letter)[0].play();
+    players[letter].play();
     $(this).addClass("bounceOutDown");
     remove = __bind(function() {
       if ($("#quiz").find(".suggestion").length === 1) {
@@ -24,12 +25,13 @@
     return setTimeout(remove, 1000);
   };
   POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
+  players = {};
   $(function() {
     var $quiz, $settings, quiz, quizOptions;
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(POOL, function(letter) {
-      return addAudio(letter, "audio/" + letter + ".aiff");
+      return players[letter] = addAudio(letter, "audio/" + letter + ".aiff");
     });
     quizOptions = {
       pool: POOL,

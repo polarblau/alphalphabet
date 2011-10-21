@@ -5,25 +5,11 @@ addAudio = (id, file) ->
   track.controls = ""
   document.body.appendChild(track)
   track.load()
-  # track.play()
-  
-  # $track          = $("<audio/>")
-  #   .attr
-  #     "id"      : "suggestion-#{id}"
-  #     "autoplay": false
-  #     "preload" : false
-  # $track.trigger("pause")
-  # removeListener = -> $track.unbind('canplaythrough')
-  # $track.bind('canplaythrough', removeListener)
-  # $("body").append($track)
-  # $track.attr("src", file)
-  # $track.trigger("play")
-  # pauseTrack = => $track.trigger("pause")
-  # setTimeout(pauseTrack, 1)
-  
+  track
+
 letterClickHandler = (e)->
   letter = $(@).data("value")
-  $("#suggestion-#{letter}")[0].play()
+  players[letter].play()#$("#suggestion-#{letter}")[0].play()
   $(@).addClass("bounceOutDown")
   remove = =>
     if $("#quiz").find(".suggestion").length == 1
@@ -33,6 +19,7 @@ letterClickHandler = (e)->
   
 
 POOL = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
+players = {}
 
 $ ->  
                 
@@ -40,7 +27,7 @@ $ ->
   $settings     = $("#settings")
   
   _.each POOL, (letter) ->
-    addAudio(letter, "audio/#{letter}.aiff")
+    players[letter] = addAudio(letter, "audio/#{letter}.aiff")
                 
   quizOptions   = 
     pool: POOL
