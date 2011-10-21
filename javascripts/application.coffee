@@ -23,7 +23,7 @@ $ ->
   
   _.each alphabet, (letter) ->
     alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
-    alphabetSounds[letter].load().bind "stall", ->
+    alphabetSounds[letter].load().play().bind "stall", ->
       alert("stalling #{letter}")
                   
   quizOptions   = 
@@ -52,13 +52,14 @@ $ ->
           "top"     : 500 - width
           "width"   : "#{width}px"
       })
-      .attr("onclick", "")
       .appendTo($quiz)
       .bind "click", ->
         letter = $(@).addClass("bounceOutDown").text()
-        console.log letter
         alphabetSounds[letter].play()
-        remove = => $(@).remove()
+        remove = => 
+          if $("#quiz").find(".suggestion").length == 1
+            $(document).trigger("refreshquiz")
+          $(@).remove()
         setTimeout(remove, 1000)
         
       revealDelayed = -> 
@@ -66,10 +67,6 @@ $ ->
         $letter.addClass("bounceInDown")
           
       setTimeout(revealDelayed, Math.random() * 500 + 150 * i)
-  #
-    # 
-    # if $("#quiz").find(".suggestion").length == 1
-    #   $(document).trigger("refreshquiz")
-  
+
   $(document).trigger("refreshquiz")
     

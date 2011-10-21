@@ -9,7 +9,7 @@
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
       alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
-      return alphabetSounds[letter].load().bind("stall", function() {
+      return alphabetSounds[letter].load().play().bind("stall", function() {
         return alert("stalling " + letter);
       });
     });
@@ -36,12 +36,14 @@
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).attr("onclick", "").appendTo($quiz).bind("click", function() {
+        }).appendTo($quiz).bind("click", function() {
           var remove;
           letter = $(this).addClass("bounceOutDown").text();
-          console.log(letter);
           alphabetSounds[letter].play();
           remove = __bind(function() {
+            if ($("#quiz").find(".suggestion").length === 1) {
+              $(document).trigger("refreshquiz");
+            }
             return $(this).remove();
           }, this);
           return setTimeout(remove, 1000);
