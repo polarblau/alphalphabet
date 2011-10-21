@@ -32,11 +32,6 @@ if ENV['RACK_ENV'] != 'production'
   use Sass::Plugin::Rack
   Sass::Plugin.add_template_location(root + '/stylesheets/')
   
-  require 'rack/coffee'
-  use Rack::Coffee, {
-    :root => root,
-    :urls => ['/javascripts/', '/spec/']
-  }
 end
 
 # Other Rack Middleware

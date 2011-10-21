@@ -26,7 +26,9 @@ Coffeescript
 ------------
 
 The javascript for this project are written in Coffescript and compiled to javascript
-on demand by the coffee-rack gem
+on demand using guard:
+
+  $ guard
 
 Learn more about Coffescript: <http://jashkenas.github.com/coffee-script/>
 
@@ -35,10 +37,8 @@ JS Specs
 --------
 
 The specs are written using Jasmine. To run them open `spec/index.html`
-in a browser. The specs themselves are written using Coffeescript, but since the 
-specs aren't run off the server, you need to add a watcher:
-
-    $ coffee -c -o spec/ --watch spec/ 
+in a browser. The specs themselves are written using Coffeescript. Make sure
+that you have started guard.
 
 Learn more about Jasmine: <https://github.com/pivotal/jasmine/>
 
