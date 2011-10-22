@@ -11,7 +11,7 @@ class Deploy < Thor
     run "serve export"
     
     say "Creating manifest"
-    Manifesto.cache :directory => './html'
+    puts Manifesto.cache :directory => './html'
     
     say "Committing everything"
     message = options[:message] || "Deploying."
