@@ -2,9 +2,3 @@ CACHE MANIFEST
 
 NETWORK:
 http://polarblau.github.com/alphalphabet/html/
-
-CACHE:
-/
-/stylesheets/screen.css
-/javascripts/application.js
-/index.html
