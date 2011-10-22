@@ -1,17 +1,21 @@
 require 'manifesto'
 
-class Deploy < Thor
+class Utilities < Thor
   include Thor::Actions
+  
+  HTML_PATH = File.join(File.dirname(__FILE__), "html")
   
   desc "deploy", "Create manifest, ensure coffeescript conversion, export, commit and deploy"
   method_option :message, :type => :string, :aliases => "-m"
-  def foobar
+  def deploy
     
     say "Exporting"
     run "serve export"
     
     say "Creating manifest"
-    puts Manifesto.cache :directory => './html'
+    manifest = Manifesto.cache :directory => './html'
+    puts HTML_PATH
+    File.open("./html/alphalphabet.manifest", 'w') {|f| f.write(manifest) }
     
     say "Committing everything"
     message = options[:message] || "Deploying."
