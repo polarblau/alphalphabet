@@ -8,8 +8,7 @@
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
-      alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
-      return alphabetSounds[letter].play();
+      return alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
     });
     quizOptions = {
       pool: alphabet,

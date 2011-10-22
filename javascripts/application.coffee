@@ -8,14 +8,8 @@ $ ->
   $quiz         = $("#quiz")
   $settings     = $("#settings")
   
-  # soundsLoadedCounter = 0
-  # soundLoaded = ->
-  #   if ++soundsLoadedCounter == _.size(alphabetSounds)
-  #     alert "all sounds loaded"
-  
   _.each alphabet, (letter) ->
     alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
-    alphabetSounds[letter].play()
 
   quizOptions   = 
     pool: alphabet
