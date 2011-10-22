@@ -15,13 +15,13 @@ class Utilities < Thor
     say "Creating manifest"
     manifest = Manifesto.cache :directory => HTML_PATH
     File.open("#{HTML_PATH}/alphalphabet.manifest", 'w') {|f| 
-      f.write(manifest.join("\n"))
+      f.write(manifest.join(""))
     }
     
     say "Committing everything"
     message = options[:message] || "Deploying."
     run "git add ."
-    run "git commit -m #{message}"
+    run "git commit -m '#{message}'"
     run "git push origin gh-pages"
   end
   
