@@ -13,9 +13,10 @@ class Utilities < Thor
     run "serve export"
     
     say "Creating manifest"
-    manifest = Manifesto.cache :directory => './html'
-    puts HTML_PATH
-    File.open("./html/alphalphabet.manifest", 'w') {|f| f.write(manifest) }
+    manifest = Manifesto.cache :directory => HTML_PATH
+    File.open("#{HTML_PATH}/alphalphabet.manifest", 'w') {|f| 
+      f.write(manifest.join("\n"))
+    }
     
     say "Committing everything"
     message = options[:message] || "Deploying."
