@@ -1,11 +1,3 @@
-# addAudio = (id, file) ->
-#   track = document.createElement("audio")
-#   track.id = "suggestion-#{id}"
-#   track.src = file
-#   track.controls = ""
-#   document.body.appendChild(track)
-#   track.load()
-#   track
 
 alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
 alphabetSounds = {}
@@ -23,14 +15,8 @@ $ ->
   
   _.each alphabet, (letter) ->
     alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
-    alphabetSounds[letter].load().bind "stall", ->
-      alert("stalling #{letter}")
-    
-  group = new buzz.group(_.values(alphabetSounds))
-  $quiz.bind "click", ->
-    group.play()
-    $quiz.unbind("click")
-                
+    alphabetSounds[letter].play()
+
   quizOptions   = 
     pool: alphabet
     possibilitiesCount: 3
