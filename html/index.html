@@ -12,12 +12,7 @@
     <script type='text/javascript'>
       //<![CDATA[
         function logEvent(event) {
-          if (event.type == "error") {
-            console.error(event);
-          }
-          else {
-            console.log(event.type);
-          }
+          console.log(event.type);
         }
         window.applicationCache.addEventListener('checking',logEvent,false);
         window.applicationCache.addEventListener('noupdate',logEvent,false);

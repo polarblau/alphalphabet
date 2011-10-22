@@ -302,44 +302,9 @@ td {
   h2, h3 {
     page-break-after: avoid; } }
 @font-face {
-  font-family: "Gibson-Light";
-  src: url("../fonts/gibson/121818_0.eot");
-  src: url("../fonts/gibson/121818_0.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_0.woff") format("woff"), url("../fonts/gibson/121818_0.ttf") format("truetype"), url("../fonts/gibson/121818_0.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-LightIt";
-  src: url("../fonts/gibson/121818_1.eot");
-  src: url("../fonts/gibson/121818_1.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_1.woff") format("woff"), url("../fonts/gibson/121818_1.ttf") format("truetype"), url("../fonts/gibson/121818_1.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-BoldItalic";
-  src: url("../fonts/gibson/121818_2.eot");
-  src: url("../fonts/gibson/121818_2.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_2.woff") format("woff"), url("../fonts/gibson/121818_2.ttf") format("truetype"), url("../fonts/gibson/121818_2.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-SemiboldIt";
-  src: url("../fonts/gibson/121818_3.eot");
-  src: url("../fonts/gibson/121818_3.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_3.woff") format("woff"), url("../fonts/gibson/121818_3.ttf") format("truetype"), url("../fonts/gibson/121818_3.svg#wf") format("svg"); }
-
-@font-face {
   font-family: "Gibson-Bold";
   src: url("../fonts/gibson/121818_4.eot");
   src: url("../fonts/gibson/121818_4.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_4.woff") format("woff"), url("../fonts/gibson/121818_4.ttf") format("truetype"), url("../fonts/gibson/121818_4.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-Regular";
-  src: url("../fonts/gibson/121818_5.eot");
-  src: url("../fonts/gibson/121818_5.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_5.woff") format("woff"), url("../fonts/gibson/121818_5.ttf") format("truetype"), url("../fonts/gibson/121818_5.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-SemiBold";
-  src: url("../fonts/gibson/121818_6.eot");
-  src: url("../fonts/gibson/121818_6.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_6.woff") format("woff"), url("../fonts/gibson/121818_6.ttf") format("truetype"), url("../fonts/gibson/121818_6.svg#wf") format("svg"); }
-
-@font-face {
-  font-family: "Gibson-Italic";
-  src: url("../fonts/gibson/121818_7.eot");
-  src: url("../fonts/gibson/121818_7.eot?#iefix") format("embedded-opentype"), url("../fonts/gibson/121818_7.woff") format("woff"), url("../fonts/gibson/121818_7.ttf") format("truetype"), url("../fonts/gibson/121818_7.svg#wf") format("svg"); }
 
 body {
   -webkit-transform: translateZ(0); }

@@ -9,7 +9,7 @@ $ ->
   $settings     = $("#settings")
   
   _.each alphabet, (letter) ->
-    alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
+    alphabetSounds[letter] = new buzz.sound("audio/#{letter}.m4a")
 
   quizOptions   = 
     pool: alphabet
