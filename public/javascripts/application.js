@@ -19,17 +19,13 @@
     };
     quiz = new Quiz(quizOptions);
     $(document).bind("refreshquiz", __bind(function() {
-      var margin, playCorrect, possibilities, width;
+      var margin, possibilities, width;
       $quiz.find(".suggestion").each(function() {
         return $(this).addClass("bounceOutDown").bind("webkitAnimationEnd", __bind(function() {
           return $(this).remove();
         }, this));
       });
       possibilities = quiz.ask();
-      playCorrect = __bind(function() {
-        return alphabetSounds[quiz.correct].play();
-      }, this);
-      setTimeout(playCorrect, 1000);
       margin = 50;
       width = (1024 - margin * 2) / possibilities.length;
       return _.each(possibilities, function(letter, i) {
@@ -45,7 +41,11 @@
             "width": "" + width + "px"
           }
         }).appendTo($quiz).bind("click", function() {
+          letter = $(this).text();
+          return alphabetSounds[letter].play();
+        }).bind("touchStart", function(e) {
           var remove;
+          e.preventDefault();
           letter = $(this).text();
           if (quiz.check(letter)) {
             $(this).addClass("correct bounce").bind("webkitAnimationEnd", __bind(function() {
@@ -59,7 +59,6 @@
               return setTimeout(remove, 1000);
             }, this));
           }
-          alphabetSounds[letter].play();
           return remove = __bind(function() {
             return $(this).remove();
           }, this);
@@ -68,7 +67,10 @@
           rotation = Math.random() * 40 - 20;
           return $letter.addClass("bounceInDown");
         };
-        return setTimeout(revealDelayed, Math.random() * 500 + 150 * i);
+        setTimeout(revealDelayed, Math.random() * 500 + 150 * i);
+        return $quiz.find(".suggestion").filter(function() {
+          return $(this).text() === quiz.correct;
+        }).trigger("click");
       });
     }, this));
     return $(document).trigger("refreshquiz");

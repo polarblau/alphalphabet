@@ -21,7 +21,6 @@ $ ->
   
   $(document).bind "refreshquiz", =>
     
-    
     $quiz.find(".suggestion").each ->
       $(@)
         .addClass("bounceOutDown")
@@ -29,10 +28,7 @@ $ ->
           $(@).remove()
           
     possibilities = quiz.ask()
-    
-    playCorrect = => alphabetSounds[quiz.correct].play()
-    setTimeout(playCorrect, 1000)
-  
+
     margin        = 50
     width         = (1024 - margin * 2)  / possibilities.length
 
@@ -49,6 +45,10 @@ $ ->
       })
       .appendTo($quiz)
       .bind "click", ->
+        letter = $(@).text()
+        alphabetSounds[letter].play()
+      .bind "touchStart", (e) ->
+        e.preventDefault()
         letter = $(@).text()
         if quiz.check(letter)
           $(@)
@@ -67,7 +67,6 @@ $ ->
                 .removeClass("wobble")
                 .addClass("bounceOutDown")
               setTimeout(remove, 1000)
-        alphabetSounds[letter].play()
         remove = => $(@).remove()
         
       revealDelayed = -> 
@@ -75,6 +74,13 @@ $ ->
         $letter.addClass("bounceInDown")
           
       setTimeout(revealDelayed, Math.random() * 500 + 150 * i)
+      
+      # playCorrect = => alphabetSounds[quiz.correct].play()
+      # setTimeout(playCorrect, 1000)
+      
+      $quiz.find(".suggestion").filter( ->
+        $(@).text() == quiz.correct 
+      ).trigger("click")
 
   $(document).trigger("refreshquiz")
     
