@@ -4,6 +4,8 @@ alphabetSounds = {}
 
 
 $ ->  
+  
+  window.applicationCache.addEventListener 'error', (-> console.error("Cache error.")), false
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")

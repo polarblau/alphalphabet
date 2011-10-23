@@ -5,6 +5,9 @@
   alphabetSounds = {};
   $(function() {
     var $quiz, $settings, quiz, quizOptions;
+    window.applicationCache.addEventListener('error', (function() {
+      return console.error("Cache error.");
+    }), false);
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
