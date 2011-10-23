@@ -21,9 +21,17 @@ $ ->
   
   $(document).bind "refreshquiz", =>
     
-    $quiz.empty()
-         
+    
+    $quiz.find(".suggestion").each ->
+      $(@)
+        .addClass("bounceOutDown")
+        .bind "webkitAnimationEnd", =>
+          $(@).remove()
+          
     possibilities = quiz.ask()
+    
+    playCorrect = => alphabetSounds[quiz.correct].play()
+    setTimeout(playCorrect, 1000)
   
     margin        = 50
     width         = (1024 - margin * 2)  / possibilities.length
@@ -41,13 +49,26 @@ $ ->
       })
       .appendTo($quiz)
       .bind "click", ->
-        letter = $(@).addClass("bounceOutDown").text()
+        letter = $(@).text()
+        if quiz.check(letter)
+          $(@)
+            .addClass("correct bounce")
+            .bind "webkitAnimationEnd", =>
+              $(@)
+                .removeClass("bounce")
+                .addClass("bounceOutDown")
+              setTimeout(remove, 1000)
+              $(document).trigger("refreshquiz")
+        else
+          $(@)
+            .addClass("glow-error wobble")
+            .bind "webkitAnimationEnd", =>
+              $(@)
+                .removeClass("wobble")
+                .addClass("bounceOutDown")
+              setTimeout(remove, 1000)
         alphabetSounds[letter].play()
-        remove = => 
-          if $("#quiz").find(".suggestion").length == 1
-            $(document).trigger("refreshquiz")
-          $(@).remove()
-        setTimeout(remove, 1000)
+        remove = => $(@).remove()
         
       revealDelayed = -> 
         rotation = Math.random() * 40 - 20

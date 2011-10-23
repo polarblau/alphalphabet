@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest='alphalphabet.manifest'>
+<html>
   <head>
     <meta content='user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0' name='viewport' />
     <meta charset='utf-8' />
@@ -11,20 +11,13 @@
     <title>AlphAlphabet</title>
     <script type='text/javascript'>
       //<![CDATA[
-        function logEvent(event) {
-          console.log(event.type);
+        function blockMove(e) {
+          e.preventDefault();
         }
-        window.applicationCache.addEventListener('checking',logEvent,false);
-        window.applicationCache.addEventListener('noupdate',logEvent,false);
-        window.applicationCache.addEventListener('downloading',logEvent,false);
-        window.applicationCache.addEventListener('cached',logEvent,false);
-        window.applicationCache.addEventListener('updateready',logEvent,false);
-        window.applicationCache.addEventListener('obsolete',logEvent,false);
-        window.applicationCache.addEventListener('error',logEvent,false);
       //]]>
     </script>
   </head>
-  <body>
+  <body ontouchmove='blockMove(e)'>
     <div id='settings'></div>
     <div id='quiz'></div>
     <script src='javascripts/libs/vendor/jquery-1.6.4.min.js'></script>
