@@ -6,6 +6,9 @@ alphabetSounds = {}
 $ ->  
   
   window.applicationCache.addEventListener 'error', (-> console.error("Cache error.")), false
+  
+  $("body").bind "ontouchmove", (e)-> e.preventDefault()
+    
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")
@@ -40,7 +43,7 @@ $ ->
           "width"   : "#{width}px"
       })
       .appendTo($quiz)
-      .bind "click", ->
+      .bind "ontouchstart", ->
         letter = $(@).addClass("bounceOutDown").text()
         alphabetSounds[letter].play()
         remove = => 

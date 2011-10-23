@@ -8,6 +8,9 @@
     window.applicationCache.addEventListener('error', (function() {
       return console.error("Cache error.");
     }), false);
+    $("body").bind("ontouchmove", function(e) {
+      return e.preventDefault();
+    });
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
@@ -36,7 +39,7 @@
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).appendTo($quiz).bind("click", function() {
+        }).appendTo($quiz).bind("ontouchstart", function() {
           var remove;
           letter = $(this).addClass("bounceOutDown").text();
           alphabetSounds[letter].play();
