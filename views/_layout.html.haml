@@ -9,8 +9,13 @@
     %link{:href => "images/apple-touch-startup-image.jpg", :rel => "apple-touch-startup-image"}
     %link{:href => "stylesheets/screen.css", :media => "screen, mobile", :rel => "stylesheet"}
     %title AlphAlphabet
-
-  %body
+    
+    :javascript
+      function blockMove(e) {
+        e.preventDefault();
+      }
+      
+  %body{:ontouchmove => "blockMove(e)"}
     
     = yield
     

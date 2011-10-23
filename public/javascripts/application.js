@@ -8,13 +8,10 @@
     window.applicationCache.addEventListener('error', (function() {
       return console.error("Cache error.");
     }), false);
-    $("body").bind("ontouchmove", function(e) {
-      return e.preventDefault();
-    });
     $quiz = $("#quiz");
     $settings = $("#settings");
     _.each(alphabet, function(letter) {
-      return alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".m4a");
+      return alphabetSounds[letter] = new buzz.sound("audio/" + letter + ".aiff");
     });
     quizOptions = {
       pool: alphabet,
@@ -39,7 +36,7 @@
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).appendTo($quiz).bind("ontouchstart", function() {
+        }).appendTo($quiz).bind("click", function() {
           var remove;
           letter = $(this).addClass("bounceOutDown").text();
           alphabetSounds[letter].play();

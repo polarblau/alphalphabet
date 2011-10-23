@@ -6,15 +6,12 @@ alphabetSounds = {}
 $ ->  
   
   window.applicationCache.addEventListener 'error', (-> console.error("Cache error.")), false
-  
-  $("body").bind "ontouchmove", (e)-> e.preventDefault()
-    
                 
   $quiz         = $("#quiz")
   $settings     = $("#settings")
   
   _.each alphabet, (letter) ->
-    alphabetSounds[letter] = new buzz.sound("audio/#{letter}.m4a")
+    alphabetSounds[letter] = new buzz.sound("audio/#{letter}.aiff")
 
   quizOptions   = 
     pool: alphabet
@@ -43,7 +40,7 @@ $ ->
           "width"   : "#{width}px"
       })
       .appendTo($quiz)
-      .bind "ontouchstart", ->
+      .bind "click", ->
         letter = $(@).addClass("bounceOutDown").text()
         alphabetSounds[letter].play()
         remove = => 
