@@ -29,7 +29,7 @@
       margin = 50;
       width = (1024 - margin * 2) / possibilities.length;
       return _.each(possibilities, function(letter, i) {
-        var $letter, revealDelayed, rotation;
+        var $letter, playCorrect, revealDelayed, rotation;
         rotation = Math.random() * 30 - 15;
         $letter = $("<span/>", {
           "class": "suggestion animated",
@@ -40,13 +40,11 @@
             "top": 500 - width,
             "width": "" + width + "px"
           }
-        }).appendTo($quiz).bind("click", function() {
-          letter = $(this).text();
-          return alphabetSounds[letter].play();
-        }).bind("touchStart", function(e) {
+        }).appendTo($quiz).bind("click", function(e) {
           var remove;
           e.preventDefault();
           letter = $(this).text();
+          alphabetSounds[letter].play();
           if (quiz.check(letter)) {
             $(this).addClass("correct bounce").bind("webkitAnimationEnd", __bind(function() {
               $(this).removeClass("bounce").addClass("bounceOutDown");
@@ -68,9 +66,10 @@
           return $letter.addClass("bounceInDown");
         };
         setTimeout(revealDelayed, Math.random() * 500 + 150 * i);
-        return $quiz.find(".suggestion").filter(function() {
-          return $(this).text() === quiz.correct;
-        }).trigger("click");
+        playCorrect = __bind(function() {
+          return alphabetSounds[quiz.correct].play();
+        }, this);
+        return setTimeout(playCorrect, 1000);
       });
     }, this));
     return $(document).trigger("refreshquiz");

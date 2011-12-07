@@ -44,12 +44,10 @@ $ ->
           "width"   : "#{width}px"
       })
       .appendTo($quiz)
-      .bind "click", ->
-        letter = $(@).text()
-        alphabetSounds[letter].play()
-      .bind "touchStart", (e) ->
+      .bind "click", (e) ->
         e.preventDefault()
         letter = $(@).text()
+        alphabetSounds[letter].play()
         if quiz.check(letter)
           $(@)
             .addClass("correct bounce")
@@ -75,12 +73,12 @@ $ ->
           
       setTimeout(revealDelayed, Math.random() * 500 + 150 * i)
       
-      # playCorrect = => alphabetSounds[quiz.correct].play()
-      # setTimeout(playCorrect, 1000)
+      playCorrect = => alphabetSounds[quiz.correct].play()
+      setTimeout(playCorrect, 1000)
       
-      $quiz.find(".suggestion").filter( ->
-        $(@).text() == quiz.correct 
-      ).trigger("click")
+      # $quiz.find(".suggestion").filter( ->
+      #   $(@).text() == quiz.correct 
+      # ).trigger("click")
 
   $(document).trigger("refreshquiz")
     
